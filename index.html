@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SonoGuar Research — Study Index</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 48px 24px 80px;
+    }
+
+    .page-wrapper { max-width: 900px; margin: 0 auto; }
+
+    /* ── HEADER ── */
+    .header { margin-bottom: 56px; }
+    .header-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 10px; font-weight: 800; letter-spacing: 2.5px;
+      text-transform: uppercase; color: #60a5fa;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+      padding: 5px 12px; border-radius: 6px; margin-bottom: 22px;
+    }
+    .header-dot { width: 6px; height: 6px; border-radius: 50%; background: #3b82f6; }
+    .header h1 {
+      font-size: 36px; font-weight: 900; color: #f8fafc;
+      line-height: 1.15; margin-bottom: 14px;
+    }
+    .header h1 span { color: #4ade80; }
+    .header-sub {
+      font-size: 15px; color: #64748b; line-height: 1.65; max-width: 640px;
+      margin-bottom: 28px;
+    }
+    .header-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+    .chip {
+      font-size: 11px; font-weight: 700; padding: 5px 12px;
+      border-radius: 6px; letter-spacing: 0.4px;
+    }
+    .chip-blue   { background: rgba(59,130,246,0.12); color: #60a5fa; }
+    .chip-green  { background: rgba(34,197,94,0.12);  color: #4ade80; }
+    .chip-amber  { background: rgba(245,158,11,0.12); color: #fbbf24; }
+    .chip-purple { background: rgba(168,85,247,0.12); color: #d8b4fe; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: #334155;
+      margin-bottom: 16px; padding-bottom: 10px;
+      border-bottom: 1px solid #1e2433;
+    }
+
+    /* ── PITCH CARDS ── */
+    .pitch-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin-bottom: 48px;
+    }
+    .pitch-card {
+      border-radius: 16px; padding: 28px 24px;
+      border: 1px solid; text-decoration: none;
+      display: flex; flex-direction: column;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+    .pitch-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .pitch-card.amber {
+      background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.2);
+    }
+    .pitch-card.red {
+      background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.2);
+    }
+    .pitch-card.green {
+      background: rgba(34,197,94,0.06); border-color: rgba(34,197,94,0.2);
+    }
+    .card-study {
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .amber .card-study { color: #fbbf24; }
+    .red   .card-study { color: #f87171; }
+    .green .card-study { color: #4ade80; }
+    .card-icon { font-size: 28px; margin-bottom: 12px; }
+    .card-title {
+      font-size: 15px; font-weight: 800; color: #f8fafc;
+      line-height: 1.3; margin-bottom: 10px; flex: 1;
+    }
+    .card-hook {
+      font-size: 12px; color: #64748b; line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    .card-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+    .card-chip {
+      font-size: 10px; font-weight: 700; padding: 3px 9px;
+      border-radius: 5px; letter-spacing: 0.3px;
+    }
+    .card-cta {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 12px; font-weight: 700; text-decoration: none;
+    }
+    .amber .card-cta { color: #fbbf24; }
+    .red   .card-cta { color: #f87171; }
+    .green .card-cta { color: #4ade80; }
+
+    /* ── PROTOCOL CARDS ── */
+    .protocol-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-bottom: 48px;
+    }
+    .proto-card {
+      background: #131824; border: 1px solid #2d3348;
+      border-radius: 14px; padding: 24px 22px;
+      text-decoration: none; display: flex; flex-direction: column;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .proto-card:hover {
+      transform: translateY(-2px); border-color: #475569;
+    }
+    .proto-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #475569; margin-bottom: 8px;
+    }
+    .proto-title {
+      font-size: 14px; font-weight: 800; color: #f8fafc;
+      line-height: 1.3; margin-bottom: 8px;
+    }
+    .proto-desc {
+      font-size: 12px; color: #64748b; line-height: 1.5; flex: 1; margin-bottom: 14px;
+    }
+    .proto-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 12px; border-top: 1px solid #1e2433;
+      font-size: 11px; color: #475569;
+    }
+    .proto-footer span { color: #60a5fa; font-weight: 700; }
+
+    /* ── IDEAS CARDS ── */
+    .ideas-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-bottom: 48px;
+    }
+    .ideas-card {
+      background: #0c0f1a; border: 1px solid #2d3348;
+      border-radius: 14px; padding: 24px 22px;
+      text-decoration: none; display: flex; flex-direction: column;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .ideas-card:hover {
+      transform: translateY(-2px); border-color: #475569;
+    }
+    .ideas-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #334155; margin-bottom: 8px;
+    }
+    .ideas-title {
+      font-size: 14px; font-weight: 800; color: #f8fafc;
+      line-height: 1.3; margin-bottom: 8px;
+    }
+    .ideas-desc {
+      font-size: 12px; color: #64748b; line-height: 1.5; flex: 1; margin-bottom: 14px;
+    }
+    .ideas-count {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 3px 9px; border-radius: 5px;
+      background: rgba(59,130,246,0.12); color: #60a5fa;
+    }
+
+    /* ── PROTOCOL SUMMARY ── */
+    .proto-summary-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin-bottom: 48px;
+    }
+    .proto-summary-card {
+      background: #131824; border: 1px solid #2d3348;
+      border-radius: 14px; padding: 22px 20px;
+      border-top: 3px solid;
+    }
+    .proto-summary-card.amber { border-top-color: #f59e0b; }
+    .proto-summary-card.red   { border-top-color: #ef4444; }
+    .proto-summary-card.green { border-top-color: #22c55e; }
+    .pscard-study {
+      font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .amber .pscard-study { color: #fbbf24; }
+    .red   .pscard-study { color: #f87171; }
+    .green .pscard-study { color: #4ade80; }
+    .pscard-step {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 7px 0; border-bottom: 1px solid #1e2433;
+    }
+    .pscard-step:last-child { border-bottom: none; }
+    .pscard-num {
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 800; flex-shrink: 0; margin-top: 1px;
+    }
+    .amber .pscard-num { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .red   .pscard-num { background: rgba(239,68,68,0.15);  color: #f87171; }
+    .green .pscard-num { background: rgba(34,197,94,0.12);  color: #4ade80; }
+    .pscard-text {
+      font-size: 12px; color: #64748b; line-height: 1.45;
+    }
+    .pscard-text strong { color: #94a3b8; }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      margin-top: 56px; padding-top: 24px;
+      border-top: 1px solid #1e2433;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-left { font-size: 12px; color: #334155; line-height: 1.6; }
+    .footer-left strong { color: #475569; }
+    .footer-ref {
+      font-size: 11px; color: #334155;
+      background: #0c0f1a; border: 1px solid #2d3348;
+      border-radius: 8px; padding: 8px 14px; line-height: 1.5;
+    }
+    .footer-ref strong { color: #475569; }
+
+    @media (max-width: 720px) {
+      .pitch-grid, .protocol-grid, .ideas-grid { grid-template-columns: 1fr; }
+      .header h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-tag"><span class="header-dot"></span>SonoGuar Research Portfolio</div>
+    <h1>Building the Evidence Base<br>for <span>SonoGuar</span></h1>
+    <p class="header-sub">
+      A collection of research pitches, detailed protocols, and idea libraries
+      proving SonoGuar is the definitive standard for medical simulation —
+      on cost, patient safety, and environmental impact.
+    </p>
+    <div class="header-chips">
+      <span class="chip chip-green">No IRB Required</span>
+      <span class="chip chip-green">$0 Study Cost</span>
+      <span class="chip chip-blue">Laptop Only</span>
+      <span class="chip chip-amber">3 Publishable Studies</span>
+      <span class="chip chip-purple">First-of-Its-Kind Research</span>
+    </div>
+  </div>
+
+  <!-- PITCH DASHBOARDS -->
+  <div class="section-label">Pitch Dashboards — The Case for Each Study</div>
+  <div class="pitch-grid">
+
+    <!-- C1 -->
+    <a class="pitch-card amber" href="C1.html">
+      <div class="card-study">Study C1 · Economic Model</div>
+      <div class="card-icon">💵</div>
+      <div class="card-title">National Cost Model: SonoGuar vs. Commercial Phantoms</div>
+      <div class="card-hook">How much money could U.S. training programs save if they switched to SonoGuar?</div>
+      <div class="card-chips">
+        <span class="card-chip chip-amber">$102K Base Savings</span>
+        <span class="card-chip chip-green">6 Weeks</span>
+      </div>
+      <div class="card-cta">View Pitch Dashboard <span>→</span></div>
+    </a>
+
+    <!-- C2 -->
+    <a class="pitch-card red" href="C2.html">
+      <div class="card-study">Study C2 · Patient Safety Model</div>
+      <div class="card-icon">🦠</div>
+      <div class="card-title">CLABSI Reduction via Universal Simulation Training</div>
+      <div class="card-hook">If SonoGuar removes the cost barrier to SBML, how many infections — and lives — are saved?</div>
+      <div class="card-chips">
+        <span class="card-chip chip-red">276:1 ROI</span>
+        <span class="card-chip chip-green">8 Weeks</span>
+      </div>
+      <div class="card-cta">View Pitch Dashboard <span>→</span></div>
+    </a>
+
+    <!-- C3 -->
+    <a class="pitch-card green" href="C3.html">
+      <div class="card-study">Study C3 · Environmental LCA</div>
+      <div class="card-icon">🌿</div>
+      <div class="card-title">Environmental Footprint: SonoGuar vs. Commercial Phantoms</div>
+      <div class="card-hook">The first life-cycle analysis of a medical simulation phantom. SonoGuar wins on every stage.</div>
+      <div class="card-chips">
+        <span class="card-chip chip-green">&gt;94% Lower CO₂</span>
+        <span class="card-chip chip-green">6 Weeks</span>
+      </div>
+      <div class="card-cta">View Pitch Dashboard <span>→</span></div>
+    </a>
+
+  </div>
+
+  <!-- PROTOCOL SUMMARIES -->
+  <div class="section-label">How Each Study Works</div>
+  <div class="proto-summary-grid">
+
+    <!-- C1 -->
+    <div class="proto-summary-card amber">
+      <div class="pscard-study">C1 · Economic Model</div>
+      <div class="pscard-step">
+        <div class="pscard-num">1</div>
+        <div class="pscard-text"><strong>Collect data</strong> — ACGME program counts + commercial phantom prices from manufacturer websites</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">2</div>
+        <div class="pscard-text"><strong>Build cost formula</strong> — SonoGuar ingredients itemized from Bikkani et al.; commercial from list prices</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">3</div>
+        <div class="pscard-text"><strong>Excel decision tree</strong> — per-program annual cost at 10%, 25%, 50% adoption scenarios</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">4</div>
+        <div class="pscard-text"><strong>Sensitivity analysis</strong> — tornado diagram testing insert lifespan, sessions/year, phantom price</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">5</div>
+        <div class="pscard-text"><strong>Scale nationally</strong> — multiply per-program savings across all U.S. residency programs</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">6</div>
+        <div class="pscard-text"><strong>Write & submit</strong> — brief report, 1,500–2,500 words, CHEERS 2022 checklist</div>
+      </div>
+    </div>
+
+    <!-- C2 -->
+    <div class="proto-summary-card red">
+      <div class="pscard-study">C2 · Patient Safety Model</div>
+      <div class="pscard-step">
+        <div class="pscard-num">1</div>
+        <div class="pscard-text"><strong>Pull published inputs</strong> — CDC NHSN CLABSI rates, AHRQ cost data, Barsuk 2014 effect size</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">2</div>
+        <div class="pscard-text"><strong>Establish baseline</strong> — calculate current U.S. CLABSIs, deaths, and total cost per year</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">3</div>
+        <div class="pscard-text"><strong>Apply SBML effect</strong> — model CLABSI rate reduction at conservative 30–45% (published: up to 84%)</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">4</div>
+        <div class="pscard-text"><strong>Excel decision tree</strong> — CLABSIs prevented, deaths averted, cost savings, ROI per scenario</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">5</div>
+        <div class="pscard-text"><strong>Sensitivity analysis</strong> — SBML effect size and adoption rate are the dominant variables</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">6</div>
+        <div class="pscard-text"><strong>Write & submit</strong> — lead with CLABSI burden, not phantoms; frame as patient safety paper</div>
+      </div>
+    </div>
+
+    <!-- C3 -->
+    <div class="proto-summary-card green">
+      <div class="pscard-study">C3 · Environmental LCA</div>
+      <div class="pscard-step">
+        <div class="pscard-num">1</div>
+        <div class="pscard-text"><strong>Define scope</strong> — functional unit: 1 training session; system boundary: cradle-to-grave</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">2</div>
+        <div class="pscard-text"><strong>SonoGuar inventory</strong> — itemize ingredient weights from Bikkani et al.; link to ecoinvent database</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">3</div>
+        <div class="pscard-text"><strong>Commercial inventory</strong> — estimate PVC/polyurethane composition; model shipping and lifespan</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">4</div>
+        <div class="pscard-text"><strong>Run OpenLCA</strong> — free software; output CO₂-eq, plastic waste, and water use per session</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">5</div>
+        <div class="pscard-text"><strong>Scale nationally</strong> — convert to EPA equivalencies (trees, car miles) for public communication</div>
+      </div>
+      <div class="pscard-step">
+        <div class="pscard-num">6</div>
+        <div class="pscard-text"><strong>Write & submit</strong> — lead with healthcare's 4.4% GHG share; ISO 14044 reporting standard</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <div class="footer-left">
+      <strong>Source publication:</strong> Bikkani et al., Western Journal of Emergency Medicine, 2026.<br>
+      All studies designed for completion by a medical student with laptop access only.
+    </div>
+    <div class="footer-ref">
+      <strong>Gel specs:</strong> G' = 2,700 Pa · Self-healing 30 min · $3/insert · 10 min synthesis
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
