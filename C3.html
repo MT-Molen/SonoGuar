@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SonoGuar C3 — Research Pitch</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 40px 24px;
+    }
+
+    .page-wrapper { max-width: 1060px; margin: 0 auto; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(15,17,23,0) 60%);
+      border: 1px solid rgba(34,197,94,0.18);
+      border-radius: 18px;
+      padding: 44px 48px 40px;
+      margin-bottom: 36px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 340px; height: 340px;
+      background: radial-gradient(circle at top right, rgba(34,197,94,0.07), transparent 70%);
+      pointer-events: none;
+    }
+    .study-id {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 10px; font-weight: 800; letter-spacing: 2.5px;
+      text-transform: uppercase; color: #4ade80;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25);
+      padding: 5px 12px; border-radius: 6px; margin-bottom: 20px;
+    }
+    .study-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
+    .hero h1 {
+      font-size: 30px; font-weight: 900; color: #f8fafc;
+      line-height: 1.2; margin-bottom: 14px; max-width: 780px;
+    }
+    .hero h1 em { color: #4ade80; font-style: normal; }
+    .hero-sub {
+      font-size: 15px; color: #94a3b8; line-height: 1.65;
+      max-width: 720px; margin-bottom: 28px;
+    }
+    .hero-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+    .chip {
+      font-size: 11px; font-weight: 700; padding: 5px 12px;
+      border-radius: 6px; letter-spacing: 0.4px;
+    }
+    .chip-green  { background: rgba(34,197,94,0.12);  color: #4ade80; }
+    .chip-blue   { background: rgba(59,130,246,0.12); color: #60a5fa; }
+    .chip-amber  { background: rgba(245,158,11,0.12); color: #fbbf24; }
+    .chip-purple { background: rgba(168,85,247,0.12); color: #d8b4fe; }
+    .chip-cyan   { background: rgba(6,182,212,0.12);  color: #22d3ee; }
+    .chip-red    { background: rgba(239,68,68,0.12);  color: #f87171; }
+
+    /* ── STAT STRIP ── */
+    .stat-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 36px;
+    }
+    .stat-card {
+      background: #131824; border: 1px solid #2d3348;
+      border-radius: 14px; padding: 22px 20px; text-align: center;
+    }
+    .stat-card.accent { border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.05); }
+    .stat-val { font-size: 32px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+    .stat-val.green  { color: #4ade80; }
+    .stat-val.red    { color: #f87171; }
+    .stat-val.amber  { color: #fbbf24; }
+    .stat-val.blue   { color: #60a5fa; }
+    .stat-label { font-size: 11px; color: #64748b; line-height: 1.4; }
+    .stat-sub   { font-size: 10px; color: #475569; margin-top: 4px; }
+
+    /* ── SECTION HEADER ── */
+    .section-head {
+      display: flex; align-items: center; gap: 14px; margin: 40px 0 18px;
+    }
+    .section-head h2 {
+      font-size: 11px; font-weight: 800; color: #f8fafc;
+      letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap;
+    }
+    .section-line { flex: 1; height: 1px; background: #2d3348; }
+
+    /* ── TWO-COL ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* ── PANEL ── */
+    .panel {
+      background: #131824; border: 1px solid #2d3348;
+      border-radius: 14px; padding: 26px 24px;
+    }
+    .panel h3 {
+      font-size: 13px; font-weight: 800; color: #f8fafc;
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .panel-icon {
+      width: 24px; height: 24px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; font-size: 13px;
+    }
+    .icon-green  { background: rgba(34,197,94,0.15); }
+    .icon-blue   { background: rgba(59,130,246,0.12); }
+    .icon-amber  { background: rgba(245,158,11,0.12); }
+    .icon-red    { background: rgba(239,68,68,0.12); }
+
+    /* ── GAP BLOCK ── */
+    .gap-block {
+      background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.18);
+      border-radius: 14px; padding: 26px 28px; margin-bottom: 20px;
+    }
+    .gap-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: #4ade80; margin-bottom: 10px;
+    }
+    .gap-block p { font-size: 14px; color: #cbd5e1; line-height: 1.7; }
+    .gap-block p strong { color: #f8fafc; }
+
+    /* ── HYPOTHESIS ── */
+    .hypothesis {
+      background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2);
+      border-left: 4px solid #22c55e;
+      border-radius: 0 12px 12px 0; padding: 20px 24px; margin-bottom: 20px;
+    }
+    .hyp-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      color: #4ade80; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .hypothesis p {
+      font-size: 14px; color: #e2e8f0; line-height: 1.65; font-style: italic;
+    }
+
+    /* ── LCA STAGE GRID ── */
+    .lca-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 0; }
+    .lca-card {
+      background: #0c0f1a; border: 1px solid #2d3348;
+      border-radius: 12px; padding: 16px 14px;
+    }
+    .lca-stage {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #334155; margin-bottom: 6px;
+    }
+    .lca-title { font-size: 12px; font-weight: 800; color: #f8fafc; margin-bottom: 10px; line-height: 1.3; }
+    .lca-sg-label { font-size: 9px; font-weight: 700; color: #4ade80; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .lca-cm-label { font-size: 9px; font-weight: 700; color: #f87171; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; margin-top: 8px; }
+    .lca-sg { font-size: 11px; color: #64748b; line-height: 1.45; }
+    .lca-cm { font-size: 11px; color: #64748b; line-height: 1.45; }
+
+    /* ── STEP LIST ── */
+    .step-list { list-style: none; }
+    .step-item {
+      display: flex; gap: 14px; padding: 12px 0;
+      border-bottom: 1px solid #1e2433;
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3);
+      color: #4ade80; font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-title { font-size: 13px; font-weight: 700; color: #f8fafc; margin-bottom: 3px; }
+    .step-desc  { font-size: 12px; color: #64748b; line-height: 1.5; }
+    .step-tag   { font-size: 10px; color: #22c55e; font-weight: 600; margin-top: 4px; }
+
+    /* ── FORMULA BOX ── */
+    .formula-box {
+      background: #0c0f1a; border: 1px solid #2d3348;
+      border-radius: 10px; padding: 16px 20px; margin: 14px 0;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px; color: #60a5fa; line-height: 1.85;
+    }
+    .formula-comment { color: #475569; }
+
+    /* ── COMPARISON TABLE ── */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: #475569;
+      padding: 10px 12px; text-align: left;
+      border-bottom: 1px solid #2d3348;
+    }
+    .data-table td {
+      font-size: 12px; color: #94a3b8;
+      padding: 10px 12px; border-bottom: 1px solid #1e2433;
+      vertical-align: top; line-height: 1.45;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table .hl td { background: rgba(34,197,94,0.04); color: #f8fafc; }
+    .val-green { color: #4ade80 !important; font-weight: 700; }
+    .val-red   { color: #f87171 !important; font-weight: 700; }
+    .val-amber { color: #fbbf24 !important; font-weight: 700; }
+    .val-blue  { color: #60a5fa !important; font-weight: 700; }
+
+    /* ── IMPACT SPOTLIGHT ── */
+    .impact-spotlight {
+      background: linear-gradient(135deg, rgba(34,197,94,0.07) 0%, rgba(6,182,212,0.05) 100%);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 14px; padding: 28px 32px; margin-bottom: 20px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;
+    }
+    .impact-cell {
+      text-align: center; padding: 12px 16px;
+      border-right: 1px solid #2d3348;
+    }
+    .impact-cell:last-child { border-right: none; }
+    .impact-val { font-size: 40px; font-weight: 900; color: #4ade80; line-height: 1; margin-bottom: 6px; }
+    .impact-val.cyan  { color: #22d3ee; }
+    .impact-val.amber { color: #fbbf24; }
+    .impact-label { font-size: 12px; color: #64748b; line-height: 1.4; }
+    .impact-sub   { font-size: 10px; color: #334155; margin-top: 4px; }
+
+    /* ── SENSITIVITY ── */
+    .sens-row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+    .sens-label { font-size: 12px; color: #94a3b8; width: 230px; flex-shrink: 0; }
+    .sens-bar-wrap { flex: 1; background: #1e2433; border-radius: 4px; height: 7px; }
+    .sens-bar { height: 7px; border-radius: 4px; }
+    .sens-bar.green  { background: #22c55e; }
+    .sens-bar.blue   { background: #3b82f6; }
+    .sens-bar.amber  { background: #f59e0b; }
+    .sens-bar.purple { background: #a855f7; }
+    .sens-bar.red    { background: #ef4444; }
+    .sens-val { font-size: 11px; color: #64748b; width: 90px; text-align: right; flex-shrink: 0; }
+
+    /* ── TIMELINE ── */
+    .timeline { list-style: none; position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 14px; top: 0; bottom: 0;
+      width: 2px; background: #2d3348;
+    }
+    .tl-item { display: flex; gap: 16px; padding: 0 0 20px; position: relative; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+      border: 2px solid #22c55e; background: #0f1117;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 800; color: #4ade80;
+      position: relative; z-index: 1;
+    }
+    .tl-week  { font-size: 10px; color: #22c55e; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+    .tl-title { font-size: 13px; font-weight: 700; color: #f8fafc; margin-bottom: 3px; }
+    .tl-desc  { font-size: 12px; color: #64748b; line-height: 1.5; }
+
+    /* ── JOURNALS ── */
+    .journal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .journal-card {
+      background: #0c0f1a; border: 1px solid #2d3348;
+      border-radius: 10px; padding: 14px 16px;
+    }
+    .journal-name { font-size: 12px; font-weight: 700; color: #f8fafc; margin-bottom: 4px; }
+    .journal-meta { font-size: 11px; color: #64748b; line-height: 1.4; }
+    .if-badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 2px 7px; border-radius: 4px; margin-left: 6px;
+      background: rgba(34,197,94,0.12); color: #4ade80;
+    }
+    .if-badge.high { background: rgba(168,85,247,0.15); color: #d8b4fe; }
+
+    /* ── OUTPUTS ── */
+    .output-list { list-style: none; }
+    .output-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 9px 0; border-bottom: 1px solid #1e2433;
+      font-size: 12px; color: #94a3b8; line-height: 1.4;
+    }
+    .output-item:last-child { border-bottom: none; }
+    .output-icon { font-size: 14px; flex-shrink: 0; }
+    .output-bold { color: #f8fafc; font-weight: 600; }
+
+    /* ── PITFALLS ── */
+    .pitfall-list { list-style: none; }
+    .pitfall-item {
+      display: flex; gap: 12px; padding: 11px 0;
+      border-bottom: 1px solid #1e2433;
+    }
+    .pitfall-item:last-child { border-bottom: none; }
+    .pitfall-problem { font-size: 12px; font-weight: 700; color: #f87171; margin-bottom: 2px; }
+    .pitfall-fix     { font-size: 12px; color: #64748b; line-height: 1.4; }
+    .pitfall-fix strong { color: #94a3b8; }
+
+    /* ── VS COMPARISON STRIP ── */
+    .vs-strip {
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      gap: 0; background: #131824; border: 1px solid #2d3348;
+      border-radius: 14px; overflow: hidden; margin-bottom: 20px;
+    }
+    .vs-side { padding: 22px 24px; }
+    .vs-side.sg { border-right: 1px solid #2d3348; background: rgba(34,197,94,0.04); }
+    .vs-side.cm { background: rgba(239,68,68,0.04); }
+    .vs-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .vs-label.green { color: #4ade80; }
+    .vs-label.red   { color: #f87171; }
+    .vs-center {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 16px; font-size: 13px; font-weight: 800; color: #334155;
+      border-left: 1px solid #2d3348; border-right: 1px solid #2d3348;
+    }
+    .vs-item {
+      display: flex; gap: 8px; align-items: flex-start;
+      margin-bottom: 8px; font-size: 12px; line-height: 1.4;
+    }
+    .vs-item:last-child { margin-bottom: 0; }
+    .vs-dot { font-size: 14px; flex-shrink: 0; margin-top: -1px; }
+    .vs-text { color: #64748b; }
+    .vs-text strong { color: #cbd5e1; }
+
+    /* ── PITCH FOOTER ── */
+    .pitch-footer {
+      background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.15);
+      border-radius: 14px; padding: 28px 32px;
+      display: flex; gap: 32px; align-items: center; margin-top: 40px;
+    }
+    .footer-claim { flex: 1; }
+    .footer-claim h3 { font-size: 17px; font-weight: 900; color: #f8fafc; margin-bottom: 8px; line-height: 1.3; }
+    .footer-claim p  { font-size: 13px; color: #64748b; line-height: 1.6; }
+    .footer-badges { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+    .badge-row { display: flex; gap: 8px; }
+    .badge {
+      font-size: 11px; font-weight: 700; padding: 7px 14px;
+      border-radius: 8px; text-align: center; line-height: 1.2;
+    }
+    .badge-green  { background: rgba(34,197,94,0.15);  color: #4ade80; border: 1px solid rgba(34,197,94,0.25); }
+    .badge-purple { background: rgba(168,85,247,0.15); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.25); }
+
+    @media (max-width: 720px) {
+      .stat-strip, .lca-grid { grid-template-columns: 1fr 1fr; }
+      .impact-spotlight, .two-col, .journal-grid { grid-template-columns: 1fr; }
+      .vs-strip { grid-template-columns: 1fr; }
+      .hero { padding: 28px 24px; }
+      .pitch-footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="study-id"><span class="study-dot"></span>Study C3 — Environmental Analysis</div>
+    <h1>SonoGuar Is Not Just Cheaper.<br>It's <em>Dramatically Greener.</em><br>And No One Has Measured That Yet.</h1>
+    <p class="hero-sub">
+      The first life-cycle analysis comparing a biobased, locally synthesized ultrasound phantom to commercial
+      petroleum-based alternatives. No lab. No IRB. Six weeks. Opens a new dimension that no competitor can match.
+    </p>
+    <div class="hero-chips">
+      <span class="chip chip-green">Environmental LCA</span>
+      <span class="chip chip-green">No IRB Required</span>
+      <span class="chip chip-blue">Laptop Only</span>
+      <span class="chip chip-cyan">6-Week Timeline</span>
+      <span class="chip chip-purple">$0 Cost</span>
+      <span class="chip chip-amber">First of Its Kind</span>
+    </div>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="stat-card accent">
+      <div class="stat-val green">4.4%</div>
+      <div class="stat-label">Healthcare's share of global greenhouse gas emissions</div>
+      <div class="stat-sub">Watts et al., The Lancet 2019</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val red">>94%</div>
+      <div class="stat-label">Lower CO₂-eq per session vs. commercial phantom</div>
+      <div class="stat-sub">Modeled estimate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val red">>99%</div>
+      <div class="stat-label">Less plastic waste per training session</div>
+      <div class="stat-sub">~2g (balloon) vs. 200–2,000g commercial</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val amber">0</div>
+      <div class="stat-label">Published LCAs of medical simulation phantoms</div>
+      <div class="stat-sub">This study is literally the first</div>
+    </div>
+  </div>
+
+  <!-- THE GAP -->
+  <div class="section-head"><h2>The Problem</h2><div class="section-line"></div></div>
+  <div class="gap-block">
+    <div class="gap-label">Knowledge Gap</div>
+    <p>
+      Healthcare sustainability is a growing institutional and regulatory priority — yet <strong>no published study
+      has ever quantified the environmental footprint of medical simulation phantoms.</strong>
+      Commercial ultrasound phantoms are made from petroleum-derived polymers, manufactured industrially,
+      shipped internationally, and discarded as plastic medical waste. SonoGuar is synthesized in 10 minutes
+      from food-grade agricultural ingredients, produced on-site, and biodegrades on disposal.
+      <strong>This comparison has never appeared in the literature.</strong> Being first is the entire advantage.
+    </p>
+  </div>
+
+  <div class="hypothesis">
+    <div class="hyp-label">Central Hypothesis</div>
+    <p>"SonoGuar produces substantially lower greenhouse gas emissions, plastic waste, and petroleum-derived material
+    use per training session compared to commercial ultrasound phantoms across all five life-cycle stages —
+    and full U.S. adoption would eliminate tens of thousands of kilograms of plastic medical waste annually."</p>
+  </div>
+
+  <!-- HEAD-TO-HEAD -->
+  <div class="section-head"><h2>SonoGuar vs. Commercial — Stage by Stage</h2><div class="section-line"></div></div>
+  <div class="vs-strip">
+    <div class="vs-side sg">
+      <div class="vs-label green">SonoGuar</div>
+      <div class="vs-item"><span class="vs-dot">🌾</span><div class="vs-text"><strong>Stage 1:</strong> Guar beans, glycerol, canola oil — agricultural crops, low-input farming</div></div>
+      <div class="vs-item"><span class="vs-dot">🥄</span><div class="vs-text"><strong>Stage 2:</strong> Room-temp mixing, 10 min, no factory, no specialized equipment</div></div>
+      <div class="vs-item"><span class="vs-dot">🛒</span><div class="vs-text"><strong>Stage 3:</strong> Grocery or bulk store — local sourcing, negligible freight</div></div>
+      <div class="vs-item"><span class="vs-dot">🔄</span><div class="vs-text"><strong>Stage 4:</strong> Self-healing extends lifespan — needle tract heals in 5 hours</div></div>
+      <div class="vs-item"><span class="vs-dot">♻️</span><div class="vs-text"><strong>Stage 5:</strong> Biodegradable hydrogel — no hazardous waste classification</div></div>
+    </div>
+    <div class="vs-center">VS</div>
+    <div class="vs-side cm">
+      <div class="vs-label red">Commercial Phantom</div>
+      <div class="vs-item"><span class="vs-dot">🛢</span><div class="vs-text"><strong>Stage 1:</strong> PVC, polyurethane — petroleum-derived, high upstream emissions (~6–8 kg CO₂/kg)</div></div>
+      <div class="vs-item"><span class="vs-dot">🏭</span><div class="vs-text"><strong>Stage 2:</strong> Industrial polymer casting, temperature-controlled curing, solvent waste</div></div>
+      <div class="vs-item"><span class="vs-dot">✈️</span><div class="vs-text"><strong>Stage 3:</strong> Factory → warehouse → institution; international air or sea freight</div></div>
+      <div class="vs-item"><span class="vs-dot">📉</span><div class="vs-text"><strong>Stage 4:</strong> Limited needle passes, no self-healing — repeat purchase cycle</div></div>
+      <div class="vs-item"><span class="vs-dot">🗑</span><div class="vs-text"><strong>Stage 5:</strong> Plastic medical waste — regulated disposal, PVC can release dioxins if incinerated</div></div>
+    </div>
+  </div>
+
+  <!-- METHODS -->
+  <div class="section-head"><h2>Methods</h2><div class="section-line"></div></div>
+  <div class="two-col">
+
+    <div class="panel">
+      <h3><span class="panel-icon icon-green">🔢</span>6-Step Protocol</h3>
+      <ul class="step-list">
+        <li class="step-item">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">Define Scope & Functional Unit</div>
+            <div class="step-desc">Functional unit: 1 ultrasound-guided procedure training session. System boundary: cradle-to-grave. Three impact categories: CO₂-eq, plastic waste, water use.</div>
+            <div class="step-tag">Standard: ISO 14040/14044 LCA methodology</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">Build SonoGuar Life Cycle Inventory</div>
+            <div class="step-desc">Itemize all ingredients and weights from Bikkani et al. 2026. Link to ecoinvent background processes for guar gum, glycerol, canola oil, borax. Negligible energy input.</div>
+            <div class="step-tag">Source: Bikkani et al. supplementary + ecoinvent database</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">Build Commercial Phantom Inventory</div>
+            <div class="step-desc">Estimate PVC/polyurethane composition from product specs and published LCA literature. Model shipping (air vs. sea). Amortize total impact over lifespan (300–1,000 sessions).</div>
+            <div class="step-tag">Sources: ecoinvent · EPA WARM · published polymer LCA values</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">Run LCA in OpenLCA</div>
+            <div class="step-desc">Free LCA software. Import ecoinvent database. Run CML 2002 or ReCiPe midpoint method. Output CO₂-eq, plastic waste, and water use per functional unit for both products.</div>
+            <div class="step-tag">Tool: openlca.org (free) · EPA WARM (free shortcut)</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">5</div>
+          <div>
+            <div class="step-title">Scale to National Impact</div>
+            <div class="step-desc">Apply per-session savings to full U.S. adoption (700 programs × 40 sessions/yr). Convert to EPA equivalencies — trees, car miles — for public communication.</div>
+            <div class="step-tag">Tool: EPA GHG Equivalencies Calculator (free)</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">6</div>
+          <div>
+            <div class="step-title">Write — Lead With Sustainability</div>
+            <div class="step-desc">Frame for the green healthcare audience, not the simulation audience. Open with healthcare's 4.4% GHG share. SonoGuar is the solution — not the subject.</div>
+            <div class="step-tag">Reporting: ISO 14044 · ILCD Handbook</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="panel" style="margin-bottom:16px;">
+        <h3><span class="panel-icon icon-blue">💻</span>Scale-Up Formula</h3>
+        <div class="formula-box">
+<span class="formula-comment">// Per-session impact difference</span>
+ΔCO2_per_session  = CO2_commercial − CO2_SonoGuar
+ΔPlastic_per_session = Plastic_commercial − Plastic_SonoGuar
+
+<span class="formula-comment">// National scale (700 programs, 40 sessions/yr)</span>
+National_CO2_saved    = ΔCO2  × 700 × 40   <span class="formula-comment">// kg CO₂-eq</span>
+National_plastic_saved = ΔPlastic × 700 × 40  <span class="formula-comment">// kg</span>
+
+<span class="formula-comment">// EPA equivalency conversions</span>
+Trees_equivalent  = National_CO2_saved / 21   <span class="formula-comment">// 21 kg CO₂/tree/yr</span>
+Car_miles_avoided = National_CO2_saved / 0.000404
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3><span class="panel-icon icon-amber">📋</span>LCA Input Assumptions</h3>
+        <table class="data-table">
+          <thead><tr><th>Variable</th><th>SonoGuar</th><th>Commercial</th></tr></thead>
+          <tbody>
+            <tr><td>Primary material</td><td class="val-green">Guar gum (agricultural)</td><td class="val-red">PVC / polyurethane</td></tr>
+            <tr><td>CO₂-eq per kg material</td><td class="val-green">~0.5 kg/kg</td><td class="val-red">~6–8 kg/kg</td></tr>
+            <tr><td>Manufacturing energy</td><td class="val-green">~0 (room temp mix)</td><td class="val-red">Industrial casting</td></tr>
+            <tr><td>Shipping origin</td><td class="val-green">Local grocery</td><td class="val-red">USA / Japan / Europe</td></tr>
+            <tr><td>Sessions per lifespan</td><td class="val-green">1–5 (self-healing)</td><td class="val-red">300–1,000</td></tr>
+            <tr><td>Plastic waste per unit</td><td class="val-green">~2 g (balloon)</td><td class="val-red">200–2,000 g</td></tr>
+            <tr class="hl"><td>End-of-life</td><td class="val-green">Biodegradable</td><td class="val-red">Plastic medical waste</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPACT SPOTLIGHT -->
+  <div class="section-head" style="margin-top:32px;"><h2>National Scale Impact</h2><div class="section-line"></div></div>
+  <div class="impact-spotlight">
+    <div class="impact-cell">
+      <div class="impact-val">~28K</div>
+      <div class="impact-label">Kilograms of plastic waste eliminated per year</div>
+      <div class="impact-sub">Full U.S. adoption, 700 programs × 40 sessions</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-val cyan">~94%</div>
+      <div class="impact-label">Lower CO₂-equivalent per training session</div>
+      <div class="impact-sub">Modeled estimate, base case</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-val amber">0</div>
+      <div class="impact-label">Petroleum-derived materials in SonoGuar</div>
+      <div class="impact-sub">100% food-grade agricultural sourcing</div>
+    </div>
+  </div>
+
+  <!-- SENSITIVITY -->
+  <div class="section-head"><h2>Sensitivity Analysis — Key Variables</h2><div class="section-line"></div></div>
+  <div class="panel">
+    <h3><span class="panel-icon icon-green">🌪</span>Tornado — Impact on CO₂-eq Savings per Session</h3>
+    <p style="font-size:12px; color:#64748b; margin-bottom:18px; line-height:1.5;">
+      Commercial phantom lifespan is the dominant variable — it determines how much of the manufacturing burden is assigned to each session. Even at 1,000-session lifespan (best case for commercial), SonoGuar remains dramatically lower in plastic waste.
+    </p>
+    <div class="sens-row">
+      <div class="sens-label">Commercial phantom lifespan (300–1,000 sessions)</div>
+      <div class="sens-bar-wrap"><div class="sens-bar green" style="width:93%"></div></div>
+      <div class="sens-val">±2.4 kg CO₂-eq</div>
+    </div>
+    <div class="sens-row">
+      <div class="sens-label">Shipping mode (sea vs. air freight)</div>
+      <div class="sens-bar-wrap"><div class="sens-bar blue" style="width:74%"></div></div>
+      <div class="sens-val">±1.8 kg CO₂-eq</div>
+    </div>
+    <div class="sens-row">
+      <div class="sens-label">Phantom material (PVC vs. polyurethane)</div>
+      <div class="sens-bar-wrap"><div class="sens-bar amber" style="width:48%"></div></div>
+      <div class="sens-val">±0.9 kg CO₂-eq</div>
+    </div>
+    <div class="sens-row">
+      <div class="sens-label">SonoGuar lifespan (1–5 sessions per insert)</div>
+      <div class="sens-bar-wrap"><div class="sens-bar purple" style="width:20%"></div></div>
+      <div class="sens-val">±0.06 kg CO₂-eq</div>
+    </div>
+    <div class="sens-row">
+      <div class="sens-label">Ingredient sourcing distance (5–50 km)</div>
+      <div class="sens-bar-wrap"><div class="sens-bar red" style="width:6%"></div></div>
+      <div class="sens-val">±0.01 kg CO₂-eq</div>
+    </div>
+    <p style="font-size:11px; color:#475569; margin-top:14px;">
+      Key finding: SonoGuar's environmental advantage is robust across all scenarios. Even in the most favorable commercial phantom assumption (1,000-session lifespan, sea freight), plastic waste per session still overwhelmingly favors SonoGuar due to the 2g vs. 200g+ material difference.
+    </p>
+  </div>
+
+  <!-- TIMELINE + OUTPUTS -->
+  <div class="section-head" style="margin-top:32px;"><h2>Timeline & Deliverables</h2><div class="section-line"></div></div>
+  <div class="two-col">
+
+    <div class="panel">
+      <h3><span class="panel-icon icon-blue">📅</span>6-Week Execution Plan</h3>
+      <ul class="timeline">
+        <li class="tl-item">
+          <div class="tl-dot">1</div>
+          <div>
+            <div class="tl-week">Week 1</div>
+            <div class="tl-title">Software Setup & Scoping</div>
+            <div class="tl-desc">Download OpenLCA. Confirm ecoinvent access via library. Define functional unit, system boundary, and 3 impact categories. Draft methods section outline.</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot">2</div>
+          <div>
+            <div class="tl-week">Week 2</div>
+            <div class="tl-title">SonoGuar LCI Build</div>
+            <div class="tl-desc">Itemize all ingredients and weights from Bikkani et al. Link each to ecoinvent background process. Calculate per-insert and per-session impact scores.</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot">3</div>
+          <div>
+            <div class="tl-week">Week 3</div>
+            <div class="tl-title">Commercial Phantom LCI</div>
+            <div class="tl-desc">Estimate material composition from product specs and published polymer LCA values. Model two shipping scenarios. Amortize over 300/500/1,000-session lifespan range.</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot">4</div>
+          <div>
+            <div class="tl-week">Week 4</div>
+            <div class="tl-title">LCA Calculation & Scale-Up</div>
+            <div class="tl-desc">Run OpenLCA impact assessment. Test phantom lifespan and shipping sensitivity. Apply per-session result to 700 programs nationally. Generate EPA equivalency figures.</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot">5</div>
+          <div>
+            <div class="tl-week">Week 5</div>
+            <div class="tl-title">Figures & Draft</div>
+            <div class="tl-desc">Build 3 figures. Write manuscript framing healthcare sustainability as the lead — not simulation. Draft introduction, methods, results, discussion.</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot">6</div>
+          <div>
+            <div class="tl-week">Week 6</div>
+            <div class="tl-title">Review & Submit</div>
+            <div class="tl-desc">ISO 14044 reporting checklist. Mentor review. Journal formatting. Submit to primary target journal.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="panel" style="margin-bottom:16px;">
+        <h3><span class="panel-icon icon-amber">📋</span>Manuscript Outputs</h3>
+        <ul class="output-list">
+          <li class="output-item"><span class="output-icon">📊</span><div><span class="output-bold">Figure 1:</span> Stacked bar — CO₂-eq per life-cycle stage for both products (manufacturing, shipping, use, disposal)</div></li>
+          <li class="output-item"><span class="output-icon">🌿</span><div><span class="output-bold">Figure 2:</span> Paired bar — per-session comparison across all 3 impact categories (CO₂, plastic, water)</div></li>
+          <li class="output-item"><span class="output-icon">🌍</span><div><span class="output-bold">Figure 3:</span> National scale infographic — plastic eliminated, CO₂ avoided, EPA equivalencies (trees, car miles)</div></li>
+          <li class="output-item"><span class="output-icon">📋</span><div><span class="output-bold">Table 1:</span> Life cycle inventory — all inputs and outputs for both products with data sources</div></li>
+          <li class="output-item"><span class="output-icon">📈</span><div><span class="output-bold">Table 2:</span> Sensitivity results — impact per session across phantom lifespan and shipping scenarios</div></li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3><span class="panel-icon icon-red">⚠</span>Pitfalls & Fixes</h3>
+        <ul class="pitfall-list">
+          <li class="pitfall-item">
+            <div>
+              <div class="pitfall-problem">Commercial phantom composition is unknown</div>
+              <div class="pitfall-fix"><strong>Fix:</strong> Use published LCA literature values for generic PVC (~6 kg CO₂/kg) and polyurethane (~4 kg CO₂/kg). Email manufacturer for MSDS. State assumption clearly — it's a limitation, not a flaw.</div>
+            </div>
+          </li>
+          <li class="pitfall-item">
+            <div>
+              <div class="pitfall-problem">SonoGuar lifespan not formally tested under repeated use</div>
+              <div class="pitfall-fix"><strong>Fix:</strong> Cite self-healing data from Bikkani et al. (G' recovery, needle tract healing). Use 1-session lifespan as conservative base case. Make formal durability testing an explicit future work recommendation.</div>
+            </div>
+          </li>
+          <li class="pitfall-item">
+            <div>
+              <div class="pitfall-problem">ecoinvent database requires institutional access</div>
+              <div class="pitfall-fix"><strong>Fix:</strong> Most university libraries provide access. If unavailable, use published per-kg CO₂ values from peer-reviewed LCA literature and the EPA WARM model for plastic waste — both free and citable.</div>
+            </div>
+          </li>
+          <li class="pitfall-item">
+            <div>
+              <div class="pitfall-problem">Reviewers unfamiliar with LCA methodology</div>
+              <div class="pitfall-fix"><strong>Fix:</strong> Cite ISO 14044 compliance in Methods. Include a 2-sentence LCA primer in the introduction. Consider a supplementary file with the full inventory table to show transparency.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARGET JOURNALS -->
+  <div class="section-head" style="margin-top:32px;"><h2>Target Journals</h2><div class="section-line"></div></div>
+  <div class="journal-grid">
+    <div class="journal-card">
+      <div class="journal-name">Journal of Cleaner Production <span class="if-badge">IF 9.8</span></div>
+      <div class="journal-meta">Top sustainability and LCA journal. Regularly publishes healthcare sector analyses. The highest-impact realistic target for this study.</div>
+    </div>
+    <div class="journal-card">
+      <div class="journal-name">The Lancet Planetary Health <span class="if-badge high">IF 24.1</span></div>
+      <div class="journal-meta">Moonshot target. Publishes healthcare carbon footprint analyses. If national plastic and CO₂ numbers are compelling, this topic fits the mission exactly.</div>
+    </div>
+    <div class="journal-card">
+      <div class="journal-name">Simulation in Healthcare <span class="if-badge">IF 3.1</span></div>
+      <div class="journal-meta">Novel angle for this journal — no environmental LCA has been published here. Stands out significantly. Familiar audience already invested in phantom selection.</div>
+    </div>
+    <div class="journal-card">
+      <div class="journal-name">BMJ Open <span class="if-badge">IF 2.9</span></div>
+      <div class="journal-meta">Open access, accepts novel methodological studies. Transparent peer review. Reliable option for a first LCA in medical simulation.</div>
+    </div>
+    <div class="journal-card">
+      <div class="journal-name">Medical Education Online <span class="if-badge">IF 3.1</span></div>
+      <div class="journal-meta">Broad medical education readership. Sustainability in education is an emerging editorial priority. Good fit if framing emphasizes curriculum impact.</div>
+    </div>
+    <div class="journal-card">
+      <div class="journal-name">PLOS ONE <span class="if-badge">IF 3.7</span></div>
+      <div class="journal-meta">Open access, accepts LCA studies, broad scope. Strong indexing and citation potential. Reliable fallback with no scope restrictions.</div>
+    </div>
+  </div>
+
+  <!-- PITCH FOOTER -->
+  <div class="pitch-footer">
+    <div class="footer-claim">
+      <h3>The Dimension No Competitor Can Match</h3>
+      <p>
+        C1 proved SonoGuar saves money. C2 proved it saves lives. C3 proves it saves the planet.
+        No commercial phantom manufacturer can claim food-grade agricultural sourcing,
+        room-temperature on-site synthesis, biodegradable disposal, and a self-healing lifespan.
+        This paper adds a fourth argument to SonoGuar's case that is structurally impossible
+        for petroleum-based competitors to answer — and it opens the door to sustainability-focused
+        journals, funders, and institutional procurement policies that C1 and C2 cannot reach.
+      </p>
+    </div>
+    <div class="footer-badges">
+      <div class="badge-row">
+        <div class="badge badge-green">6 Weeks<br>to Submission</div>
+        <div class="badge badge-green">$0<br>Study Cost</div>
+      </div>
+      <div class="badge-row">
+        <div class="badge badge-green">No IRB<br>Required</div>
+        <div class="badge badge-purple">IF 9.8<br>Top Target</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

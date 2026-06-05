@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SonoGuar C2 — Research Pitch</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 40px 24px;
+    }
+
+    .page-wrapper { max-width: 1060px; margin: 0 auto; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(15,17,23,0) 60%);
+      border: 1px solid rgba(239,68,68,0.18);
+      border-radius: 18px;
+      padding: 44px 48px 40px;
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 340px; height: 340px;
+      background: radial-gradient(circle at top right, rgba(239,68,68,0.07), transparent 70%);
+      pointer-events: none;
+    }
+    .study-id {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 10px; font-weight: 800; letter-spacing: 2.5px;
+      text-transform: uppercase; color: #f87171;
+      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);
+      padding: 5px 12px; border-radius: 6px; margin-bottom: 20px;
+    }
+    .study-dot { width: 6px; height: 6px; border-radius: 50%; background: #ef4444; }
+    .hero h1 {
+      font-size: 30px; font-weight: 900; color: #f8fafc;
+      line-height: 1.2; margin-bottom: 14px; max-width: 780px;
+    }
+    .hero h1 em { color: #f87171; font-style: normal; }
+    .hero-sub {
+      font-size: 15px; color: #94a3b8; line-height: 1.65;
+      max-width: 720px; margin-bottom: 28px;
+    }
+    .hero-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+    .chip {
+      font-size: 11px; font-weight: 700; padding: 5px 12px;
+      border-radius: 6px; letter-spacing: 0.4px;
+    }
+    .chip-red    { background: rgba(239,68,68,0.12);  color: #f87171; }
+    .chip-green  { background: rgba(34,197,94,0.12);  color: #4ade80; }
+    .chip-blue   { background: rgba(59,130,246,0.12); color: #60a5fa; }
+    .chip-amber  { background: rgba(245,158,11,0.12); color: #fbbf24; }
+    .chip-purple { background: rgba(168,85,247,0.12); color: #d8b4fe; }
+    .chip-cyan   { background: rgba(6,182,212,0.12);  color: #22d3ee; }
+
+    /* ── STAT STRIP ── */
+    .stat-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 36px;
+    }
+    .stat-card {
+      background: #131824; border: 1px solid #2d3348;
+      border-radius: 14px; padding: 22px 20px;
+      text-align: center;
+    }
+    .stat-card.accent { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.05); }
+    .stat-val {
+      font-size: 32px; font-weight: 900;
+      line-height: 1; margin-bottom: 6px;
+    }
+    .stat-val.red    { color: #f87171; }
+    .stat-val.green  { color: #4ade80; }
+    .stat-val.amber  { color: #fbbf24; }
+    .stat-val.blue   { color: #60a5fa; }
+    .stat-label { font-size: 11px; color: #64748b; line-height: 1.4; }
+    .stat-sub   { font-size: 10px; color: #475569; margin-top: 4px; }
+
+    /* ── SECTION HEADER ── */
+    .section-head {
+      display: flex; align-items: center; gap: 14px;
+      margin: 40px 0 18px;
+    }
+    .section-head h2 {
+      font-size: 11px; font-weight: 800; color: #f8fafc;
+      letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap;
+    }
+    .section-line { flex: 1; height: 1px; background: #2d3348; }
+
+    /* ── TWO-COL GRID ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* ── PANEL ── */
+    .panel {
+      background: #131824; border: 1px solid #2d3348;
+      border-radius: 14px; padding: 26px 24px;
+    }
+    .panel h3 {
+      font-size: 13px; font-weight: 800; color: #f8fafc;
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .panel-icon {
+      width: 24px; height: 24px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+    }
+    .icon-red    { background: rgba(239,68,68,0.15); }
+    .icon-green  { background: rgba(34,197,94,0.12); }
+    .icon-blue   { background: rgba(59,130,246,0.12); }
+    .icon-amber  { background: rgba(245,158,11,0.12); }
+
+    /* ── GAP BLOCK ── */
+    .gap-block {
+      background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 14px; padding: 26px 28px; margin-bottom: 20px;
+    }
+    .gap-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: #f87171; margin-bottom: 10px;
+    }
+    .gap-block p { font-size: 14px; color: #cbd5e1; line-height: 1.7; }
+    .gap-block p strong { color: #f8fafc; }
+
+    /* ── CAUSAL CHAIN ── */
+    .causal-chain {
+      display: flex; align-items: center; gap: 0;
+      background: #131824; border: 1px solid #2d3348;
+      border-radius: 14px; padding: 20px 24px;
+      margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .chain-node {
+      text-align: center; padding: 10px 14px;
+      flex: 1; min-width: 110px;
+    }
+    .chain-node .cn-icon { font-size: 20px; margin-bottom: 6px; }
+    .chain-node .cn-label {
+      font-size: 11px; font-weight: 700; color: #f8fafc;
+      line-height: 1.3; margin-bottom: 3px;
+    }
+    .chain-node .cn-sub { font-size: 10px; color: #475569; line-height: 1.3; }
+    .chain-arrow {
+      font-size: 18px; color: #334155; flex-shrink: 0; padding: 0 4px;
+    }
+
+    /* ── HYPOTHESIS ── */
+    .hypothesis {
+      background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2);
+      border-left: 4px solid #ef4444;
+      border-radius: 0 12px 12px 0; padding: 20px 24px; margin-bottom: 20px;
+    }
+    .hyp-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      color: #f87171; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .hypothesis p {
+      font-size: 14px; color: #e2e8f0; line-height: 1.65; font-style: italic;
+    }
+
+    /* ── METHODS STEPS ── */
+    .step-list { list-style: none; }
+    .step-item {
+      display: flex; gap: 14px; padding: 12px 0;
+      border-bottom: 1px solid #1e2433;
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3);
+      color: #f87171; font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-title { font-size: 13px; font-weight: 700; color: #f8fafc; margin-bottom: 3px; }
+    .step-desc  { font-size: 12px; color: #64748b; line-height: 1.5; }
+    .step-tag   { font-size: 10px; color: #ef4444; font-weight: 600; margin-top: 4px; }
+
+    /* ── FORMULA BOX ── */
+    .formula-box {
+      background: #0c0f1a; border: 1px solid #2d3348;
+      border-radius: 10px; padding: 16px 20px; margin: 14px 0;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px; color: #60a5fa; line-height: 1.85;
+    }
+    .formula-comment { color: #475569; }
+
+    /* ── INPUTS TABLE ── */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: #475569;
+      padding: 10px 12px; text-align: left;
+      border-bottom: 1px solid #2d3348;
+    }
+    .data-table td {
+      font-size: 12px; color: #94a3b8;
+      padding: 10px 12px; border-bottom: 1px solid #1e2433;
+      vertical-align: top; line-height: 1.45;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table .hl td { background: rgba(239,68,68,0.04); }
+    .val-red   { color: #f87171 !important; font-weight: 700; }
+    .val-green { color: #4ade80 !important; font-weight: 700; }
+    .val-amber { color: #fbbf24 !important; font-weight: 700; }
+    .val-blue  { color: #60a5fa !important; font-weight: 700; }
+
+    /* ── RESULTS TABLE ── */
+    .results-table { width: 100%; border-collapse: collapse; }
+    .results-table th {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: #475569;
+      padding: 10px 12px; text-align: left;
+      border-bottom: 1px solid #2d3348;
+    }
+    .results-table td {
+      font-size: 12px; color: #94a3b8;
+      padding: 10px 12px; border-bottom: 1px solid #1e2433;
+    }
+    .results-table tr:last-child td { border-bottom: none; }
+    .results-table .base-row td { color: #f8fafc; background: rgba(239,68,68,0.05); }
+    .results-table .total-row td { color: #4ade80; font-weight: 800; border-top: 1px solid #2d3348; }
+
+    /* ── SENSITIVITY ── */
+    .sens-row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+    .sens-label { font-size: 12px; color: #94a3b8; width: 220px; flex-shrink: 0; }
+    .sens-bar-wrap { flex: 1; background: #1e2433; border-radius: 4px; height: 7px; }
+    .sens-bar { height: 7px; border-radius: 4px; }
+    .sens-bar.red    { background: #ef4444; }
+    .sens-bar.blue   { background: #3b82f6; }
+    .sens-bar.green  { background: #22c55e; }
+    .sens-bar.purple { background: #a855f7; }
+    .sens-bar.amber  { background: #f59e0b; }
+    .sens-val { font-size: 11px; color: #64748b; width: 90px; text-align: right; flex-shrink: 0; }
+
+    /* ── TIMELINE ── */
+    .timeline { list-style: none; position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 14px; top: 0; bottom: 0;
+      width: 2px; background: #2d3348;
+    }
+    .tl-item { display: flex; gap: 16px; padding: 0 0 20px; position: relative; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+      border: 2px solid #ef4444; background: #0f1117;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 800; color: #f87171;
+      position: relative; z-index: 1;
+    }
+    .tl-week  { font-size: 10px; color: #ef4444; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+    .tl-title { font-size: 13px; font-weight: 700; color: #f8fafc; margin-bottom: 3px; }
+    .tl-desc  { font-size: 12px; color: #64748b; line-height: 1.5; }
+
+    /* ── JOURNALS ── */
+    .journal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .journal-card {
+      background: #0c0f1a; border: 1px solid #2d3348;
+      border-radius: 10px; padding: 14px 16px;
+    }
+    .journal-name { font-size: 12px; font-weight: 700; color: #f8fafc; margin-bottom: 4px; }
+    .journal-meta { font-size: 11px; color: #64748b; line-height: 1.4; }
+    .if-badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 2px 7px; border-radius: 4px; margin-left: 6px;
+      background: rgba(34,197,94,0.12); color: #4ade80;
+    }
+
+    /* ── OUTPUTS ── */
+    .output-list { list-style: none; }
+    .output-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 9px 0; border-bottom: 1px solid #1e2433;
+      font-size: 12px; color: #94a3b8; line-height: 1.4;
+    }
+    .output-item:last-child { border-bottom: none; }
+    .output-icon { font-size: 14px; flex-shrink: 0; }
+    .output-bold { color: #f8fafc; font-weight: 600; }
+
+    /* ── PITFALLS ── */
+    .pitfall-list { list-style: none; }
+    .pitfall-item {
+      display: flex; gap: 12px; padding: 11px 0;
+      border-bottom: 1px solid #1e2433;
+    }
+    .pitfall-item:last-child { border-bottom: none; }
+    .pitfall-problem { font-size: 12px; font-weight: 700; color: #f87171; margin-bottom: 2px; }
+    .pitfall-fix     { font-size: 12px; color: #64748b; line-height: 1.4; }
+    .pitfall-fix strong { color: #94a3b8; }
+
+    /* ── PITCH FOOTER ── */
+    .pitch-footer {
+      background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.15);
+      border-radius: 14px; padding: 28px 32px;
+      display: flex; gap: 32px; align-items: center; margin-top: 40px;
+    }
+    .footer-claim { flex: 1; }
+    .footer-claim h3 { font-size: 17px; font-weight: 900; color: #f8fafc; margin-bottom: 8px; line-height: 1.3; }
+    .footer-claim p  { font-size: 13px; color: #64748b; line-height: 1.6; }
+    .footer-badges { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+    .badge-row { display: flex; gap: 8px; }
+    .badge {
+      font-size: 11px; font-weight: 700; padding: 7px 14px;
+      border-radius: 8px; text-align: center; line-height: 1.2;
+    }
+    .badge-red   { background: rgba(239,68,68,0.15);  color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+    .badge-green { background: rgba(34,197,94,0.12);  color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+
+    /* ── ROI SPOTLIGHT ── */
+    .roi-spotlight {
+      background: linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(34,197,94,0.06) 100%);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 14px; padding: 28px 32px; margin-bottom: 20px;
+      display: flex; gap: 40px; align-items: center; flex-wrap: wrap;
+    }
+    .roi-num { text-align: center; flex-shrink: 0; }
+    .roi-val { font-size: 64px; font-weight: 900; color: #4ade80; line-height: 1; }
+    .roi-unit { font-size: 14px; color: #64748b; margin-top: 4px; }
+    .roi-explain { flex: 1; }
+    .roi-explain h3 { font-size: 16px; font-weight: 800; color: #f8fafc; margin-bottom: 10px; line-height: 1.3; }
+    .roi-explain p  { font-size: 13px; color: #94a3b8; line-height: 1.65; }
+    .roi-explain p strong { color: #f8fafc; }
+
+    @media (max-width: 720px) {
+      .stat-strip { grid-template-columns: 1fr 1fr; }
+      .two-col, .journal-grid { grid-template-columns: 1fr; }
+      .causal-chain { flex-direction: column; }
+      .chain-arrow { transform: rotate(90deg); }
+      .hero { padding: 28px 24px; }
+      .pitch-footer { flex-direction: column; }
+      .roi-spotlight { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="study-id"><span class="study-dot"></span>Study C2 — Patient Safety Modeling</div>
+    <h1>A $3 Phantom Could Prevent<br><em>Thousands of Infections</em><br>and Save Millions in Healthcare Costs</h1>
+    <p class="hero-sub">
+      A decision-analytic model quantifying CLABSI reduction if SonoGuar enables universal simulation-based
+      central line training across U.S. residency programs. No lab. No IRB. Eight weeks.
+    </p>
+    <div class="hero-chips">
+      <span class="chip chip-red">Patient Safety</span>
+      <span class="chip chip-green">No IRB Required</span>
+      <span class="chip chip-blue">Laptop Only</span>
+      <span class="chip chip-cyan">8-Week Timeline</span>
+      <span class="chip chip-purple">$0 Cost</span>
+      <span class="chip chip-amber">Health Economics</span>
+    </div>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="stat-card accent">
+      <div class="stat-val red">$46K</div>
+      <div class="stat-label">Cost per CLABSI event</div>
+      <div class="stat-sub">AHRQ published estimate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val red">~13,500</div>
+      <div class="stat-label">CLABSIs per year in the U.S.</div>
+      <div class="stat-sub">CDC NHSN, 15M catheter-days</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val green">84%</div>
+      <div class="stat-label">CLABSI reduction from simulation training</div>
+      <div class="stat-sub">Barsuk et al., JAMA IM 2014</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val amber">$3</div>
+      <div class="stat-label">SonoGuar cost per training insert</div>
+      <div class="stat-sub">vs. $350–500 commercial phantom</div>
+    </div>
+  </div>
+
+  <!-- THE GAP -->
+  <div class="section-head"><h2>The Problem</h2><div class="section-line"></div></div>
+  <div class="gap-block">
+    <div class="gap-label">Knowledge Gap</div>
+    <p>
+      Simulation-based mastery learning (SBML) for central line insertion <strong>demonstrably reduces CLABSI rates</strong> —
+      by up to 84% in published trials. The primary barrier to universal SBML adoption is <strong>phantom cost</strong>.
+      SonoGuar eliminates that barrier at $3 per insert. Yet <strong>no study has modeled what that cost reduction
+      means in terms of infections prevented, lives saved, and healthcare dollars averted</strong> at a national scale.
+      Without that number, SonoGuar remains a simulation tool. With it, it becomes a patient safety intervention.
+    </p>
+  </div>
+
+  <!-- CAUSAL CHAIN -->
+  <div class="section-head"><h2>The Logic Chain</h2><div class="section-line"></div></div>
+  <div class="causal-chain">
+    <div class="chain-node">
+      <div class="cn-icon">💧</div>
+      <div class="cn-label">SonoGuar<br>= $3/session</div>
+      <div class="cn-sub">vs. $350–500 commercial</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">
+      <div class="cn-icon">🏥</div>
+      <div class="cn-label">More programs<br>adopt SBML</div>
+      <div class="cn-sub">Cost barrier removed</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">
+      <div class="cn-icon">🎓</div>
+      <div class="cn-label">More trainees<br>reach mastery</div>
+      <div class="cn-sub">Competency-based training</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">
+      <div class="cn-icon">🦠</div>
+      <div class="cn-label">Fewer CLABSIs<br>per insertion</div>
+      <div class="cn-sub">−84% in Barsuk 2014</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">
+      <div class="cn-icon">💰</div>
+      <div class="cn-label">Lives saved +<br>costs averted</div>
+      <div class="cn-sub">$46K per event prevented</div>
+    </div>
+  </div>
+
+  <div class="hypothesis">
+    <div class="hyp-label">Central Hypothesis</div>
+    <p>"Universal adoption of SonoGuar as the primary central line simulation material would generate a greater-than-100:1
+    return on investment by reducing CLABSI rates across U.S. training programs — preventing hundreds of infections
+    and averting millions in healthcare costs annually."</p>
+  </div>
+
+  <!-- METHODS + FORMULA -->
+  <div class="section-head"><h2>Methods</h2><div class="section-line"></div></div>
+  <div class="two-col">
+
+    <div class="panel">
+      <h3><span class="panel-icon icon-red">🔢</span>7-Step Protocol</h3>
+      <ul class="step-list">
+        <li class="step-item">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">Define Model Structure</div>
+            <div class="step-desc">Decision tree with three branches: no SBML, 25% adoption, 50% adoption. Time horizon: 1 year. Perspective: U.S. healthcare system.</div>
+            <div class="step-tag">Tool: Excel — one column per scenario</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">Establish Baseline CLABSI Burden</div>
+            <div class="step-desc">Pull CDC NHSN catheter-days and CLABSI rates. Calculate current annual U.S. CLABSIs, deaths, and total cost at baseline (no SBML).</div>
+            <div class="step-tag">Source: cdc.gov/nhsn · AHRQ HCUP</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">Apply SBML Effect Size</div>
+            <div class="step-desc">Use Barsuk et al. 2014 reduction figure (−84% published; use −30–45% conservative base case). Assign proportionally by adoption rate.</div>
+            <div class="step-tag">Source: Barsuk JH, JAMA Intern Med 2014;174(9)</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">Build Excel Decision Tree</div>
+            <div class="step-desc">Calculate CLABSIs prevented, deaths averted, healthcare cost saved, and SonoGuar material cost for each adoption scenario.</div>
+            <div class="step-tag">One input table → all outputs auto-calculated</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">5</div>
+          <div>
+            <div class="step-title">Calculate ROI</div>
+            <div class="step-desc">ROI = CLABSI cost savings ÷ SonoGuar material cost. Report as dollars saved per dollar spent on phantom materials.</div>
+            <div class="step-tag">Expected result: >100:1 even in worst-case scenario</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">6</div>
+          <div>
+            <div class="step-title">Sensitivity Analysis</div>
+            <div class="step-desc">One-way sensitivity on 5 variables using Excel Data Table. Present as tornado diagram. Two-way: SBML effect × adoption rate.</div>
+            <div class="step-tag">Excel: Data → What-If Analysis → Data Table</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">7</div>
+          <div>
+            <div class="step-title">Write — Lead with CLABSI, Not Phantom</div>
+            <div class="step-desc">Frame as patient safety and health economics. SonoGuar is the solution in the abstract — not the subject. Report per CHEERS 2022 checklist.</div>
+            <div class="step-tag">Target: 2,000–2,500 words (brief report)</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="panel" style="margin-bottom:16px;">
+        <h3><span class="panel-icon icon-blue">💻</span>Core Model Formula</h3>
+        <div class="formula-box">
+<span class="formula-comment">// Baseline (no SBML)</span>
+CLABSIs_baseline = catheter_days × rate_per_1000 / 1000
+Deaths_baseline  = CLABSIs_baseline × mortality_rate
+Cost_baseline    = CLABSIs_baseline × $46,000
+
+<span class="formula-comment">// With SBML adoption (e.g. 25%)</span>
+Catheter_days_affected = 15,000,000 × adoption_rate
+CLABSIs_SBML     = affected_days × reduced_rate / 1000
+CLABSIs_prevented = CLABSIs_baseline×rate − CLABSIs_SBML
+Deaths_averted   = CLABSIs_prevented × 0.18
+Cost_savings     = CLABSIs_prevented × $46,000
+SonoGuar_cost    = programs × sessions × inserts × $3
+
+<span class="formula-comment">// Return on investment</span>
+ROI = Cost_savings / SonoGuar_cost
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3><span class="panel-icon icon-green">📊</span>Key Published Inputs</h3>
+        <table class="data-table">
+          <thead><tr><th>Variable</th><th>Value</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td>U.S. ICU catheter-days/yr</td><td>~15 million</td><td>CDC NHSN</td></tr>
+            <tr><td>Baseline CLABSI rate</td><td class="val-red">0.9/1,000 days</td><td>NHSN 2022</td></tr>
+            <tr><td>SBML CLABSI reduction</td><td class="val-green">Up to −84%</td><td>Barsuk 2014</td></tr>
+            <tr><td>CLABSI mortality rate</td><td class="val-red">12–25%</td><td>Maki et al. 2006</td></tr>
+            <tr><td>Cost per CLABSI event</td><td class="val-red">$46,000</td><td>AHRQ HCUP</td></tr>
+            <tr><td>Programs (EM+IM+CCM)</td><td>~700</td><td>ACGME.org</td></tr>
+            <tr class="hl"><td>SonoGuar cost/insert</td><td class="val-green">$3</td><td>Bikkani 2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROI SPOTLIGHT -->
+  <div class="section-head" style="margin-top:32px;"><h2>The Headline Number</h2><div class="section-line"></div></div>
+  <div class="roi-spotlight">
+    <div class="roi-num">
+      <div class="roi-val">276:1</div>
+      <div class="roi-unit">Return on investment (base case)</div>
+    </div>
+    <div class="roi-explain">
+      <h3>For every $1 spent on SonoGuar materials,<br>$276 in CLABSI costs are averted.</h3>
+      <p>
+        At 25% program adoption, SonoGuar material cost ≈ <strong>$42,000/year</strong>.
+        Modeled CLABSI cost savings ≈ <strong>$11.6 million/year</strong>.
+        This ratio holds even at the most conservative effect size assumption (30% CLABSI reduction).
+        At full adoption across all 700 programs, modeled savings approach <strong>$46 million annually</strong> —
+        against a material cost of ~$168,000. The ROI is not sensitive to SonoGuar's cost.
+        It is nearly irrelevant at scale.
+      </p>
+    </div>
+  </div>
+
+  <!-- RESULTS TABLE -->
+  <div class="section-head"><h2>Projected Results</h2><div class="section-line"></div></div>
+  <div class="panel">
+    <h3><span class="panel-icon icon-green">📈</span>Model Output — Base Case (30% conservative CLABSI reduction)</h3>
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Programs</th>
+          <th>CLABSIs Prevented</th>
+          <th>Deaths Averted</th>
+          <th>Cost Savings</th>
+          <th>SonoGuar Cost</th>
+          <th>ROI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pessimistic (10%)</td>
+          <td>70</td>
+          <td class="val-amber">~100</td>
+          <td class="val-amber">~18</td>
+          <td class="val-amber">~$4.6M</td>
+          <td>~$17K</td>
+          <td class="val-green">271:1</td>
+        </tr>
+        <tr class="base-row">
+          <td>Base Case (25%)</td>
+          <td>175</td>
+          <td class="val-green">~253</td>
+          <td class="val-green">~46</td>
+          <td class="val-green">~$11.6M</td>
+          <td>~$42K</td>
+          <td class="val-green">276:1</td>
+        </tr>
+        <tr>
+          <td>Optimistic (50%)</td>
+          <td>350</td>
+          <td class="val-green">~506</td>
+          <td class="val-green">~91</td>
+          <td class="val-green">~$23.3M</td>
+          <td>~$84K</td>
+          <td class="val-green">277:1</td>
+        </tr>
+        <tr class="total-row">
+          <td>Full adoption (100%)</td>
+          <td>700</td>
+          <td>~1,012</td>
+          <td>~182</td>
+          <td>~$46.6M</td>
+          <td>~$168K</td>
+          <td>277:1</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:10px; color:#475569; margin-top:10px;">
+      Assumes 40 sessions/yr per program, 2 inserts/session, 18% CLABSI mortality, $46K cost per event. ROI ratio is nearly constant across scenarios — SonoGuar's cost is negligible relative to savings.
+    </p>
+  </div>
+
+  <!-- SENSITIVITY -->
+  <div class="section-head" style="margin-top:32px;"><h2>Sensitivity Analysis — Key Variables</h2><div class="section-line"></div></div>
+  <div class="panel">
+    <h3><span class="panel-icon icon-red">🌪</span>Tornado Diagram — Impact on CLABSIs Prevented (25% adoption, per year)</h3>
+    <p style="font-size:12px; color:#64748b; margin-bottom:18px; line-height:1.5;">
+      Wider bar = more sensitive. SBML effect size dominates all other variables — verifying the Barsuk effect is the most important assumption to defend in the manuscript.
+    </p>
+    <div class="sens-row">
+      <div class="sens-label">SBML effect size (30%–84% reduction)</div>
+      <div class="sens-bar-wrap"><div class="sens-bar red" style="width:95%"></div></div>
+      <div class="sens-val">±176 CLABSIs</div>
+    </div>
+    <div class="sens-row">
+      <div class="sens-label">Adoption rate (10%–50%)</div>
+      <div class="sens-bar-wrap"><div class="sens-bar blue" style="width:73%"></div></div>
+      <div class="sens-val">±153 CLABSIs</div>
+    </div>
+    <div class="sens-row">
+      <div class="sens-label">National catheter-days (±20%)</div>
+      <div class="sens-bar-wrap"><div class="sens-bar green" style="width:45%"></div></div>
+      <div class="sens-val">±51 CLABSIs</div>
+    </div>
+    <div class="sens-row">
+      <div class="sens-label">CLABSI cost per event ($36K–$56K)</div>
+      <div class="sens-bar-wrap"><div class="sens-bar purple" style="width:28%"></div></div>
+      <div class="sens-val">±$3.8M savings</div>
+    </div>
+    <div class="sens-row">
+      <div class="sens-label">SonoGuar insert lifespan (1–5 sessions)</div>
+      <div class="sens-bar-wrap"><div class="sens-bar amber" style="width:6%"></div></div>
+      <div class="sens-val">±$34K cost</div>
+    </div>
+    <p style="font-size:11px; color:#475569; margin-top:14px;">
+      Key insight: SonoGuar's material cost barely registers as a variable. Even in the worst-case scenario for every other input, the ROI remains dramatically positive. This is the model's most defensible finding.
+    </p>
+  </div>
+
+  <!-- TIMELINE + OUTPUTS -->
+  <div class="section-head" style="margin-top:32px;"><h2>Timeline & Deliverables</h2><div class="section-line"></div></div>
+  <div class="two-col">
+
+    <div class="panel">
+      <h3><span class="panel-icon icon-blue">📅</span>8-Week Execution Plan</h3>
+      <ul class="timeline">
+        <li class="tl-item">
+          <div class="tl-dot">1</div>
+          <div class="tl-body">
+            <div class="tl-week">Weeks 1–2</div>
+            <div class="tl-title">Literature & Data Gathering</div>
+            <div class="tl-desc">Pull CDC NHSN annual report, AHRQ HCUP cost data, Barsuk 2014 full text, ACGME program counts. Build full input table with citations and ranges for every variable.</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot">2</div>
+          <div class="tl-body">
+            <div class="tl-week">Week 3</div>
+            <div class="tl-title">Decision Tree Build</div>
+            <div class="tl-desc">Set up Excel workbook. Build baseline column. Verify numbers against published figures. Faculty mentor review of model logic before proceeding.</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot">3</div>
+          <div class="tl-body">
+            <div class="tl-week">Week 4</div>
+            <div class="tl-title">Scenario Modeling</div>
+            <div class="tl-desc">Complete all adoption scenarios (10%, 25%, 50%, 100%). Calculate CLABSIs prevented, deaths averted, cost savings, and ROI for each.</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot">4</div>
+          <div class="tl-body">
+            <div class="tl-week">Week 5</div>
+            <div class="tl-title">Sensitivity Analysis</div>
+            <div class="tl-desc">Run one-way sensitivity on all 5 key variables using Excel Data Table. Build tornado diagram. Run two-way: SBML effect size × adoption rate.</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot">5</div>
+          <div class="tl-body">
+            <div class="tl-week">Weeks 6–7</div>
+            <div class="tl-title">Draft Manuscript</div>
+            <div class="tl-desc">Write using CHEERS 2022 checklist. Open with CLABSI burden — not phantoms. Present model structure, inputs, 3-scenario results, sensitivity, limitations.</div>
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot">6</div>
+          <div class="tl-body">
+            <div class="tl-week">Week 8</div>
+            <div class="tl-title">Revise & Submit</div>
+            <div class="tl-desc">Mentor review, final polish, journal formatting. Submit as Brief Report to primary target journal.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="panel" style="margin-bottom:16px;">
+        <h3><span class="panel-icon icon-amber">📋</span>Manuscript Outputs</h3>
+        <ul class="output-list">
+          <li class="output-item"><span class="output-icon">🌳</span><div><span class="output-bold">Figure 1:</span> Decision tree diagram — branching structure with probability and cost at each node</div></li>
+          <li class="output-item"><span class="output-icon">📊</span><div><span class="output-bold">Figure 2:</span> Paired bar chart — CLABSIs prevented and deaths averted across all adoption scenarios</div></li>
+          <li class="output-item"><span class="output-icon">🌪</span><div><span class="output-bold">Figure 3:</span> Tornado diagram — one-way sensitivity on all 5 key variables</div></li>
+          <li class="output-item"><span class="output-icon">📋</span><div><span class="output-bold">Table 1:</span> Model input assumptions — variable, value, range, and citation for each</div></li>
+          <li class="output-item"><span class="output-icon">💰</span><div><span class="output-bold">Table 2:</span> Summary results — CLABSIs, deaths, costs, ROI across all scenarios</div></li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3><span class="panel-icon icon-red">⚠</span>Pitfalls & Fixes</h3>
+        <ul class="pitfall-list">
+          <li class="pitfall-item">
+            <div>
+              <div class="pitfall-problem">Barsuk effect size may not generalize</div>
+              <div class="pitfall-fix"><strong>Fix:</strong> Use 30–45% as the conservative base case. Run full sensitivity from 0% to 84%. Explicitly acknowledge that the Barsuk study used mastery learning — a specific, rigorous SBML protocol — not just any simulation training.</div>
+            </div>
+          </li>
+          <li class="pitfall-item">
+            <div>
+              <div class="pitfall-problem">Model conflates simulation with phantom use</div>
+              <div class="pitfall-fix"><strong>Fix:</strong> State explicitly that the model assumes SonoGuar removes the cost barrier to SBML adoption — the phantom enables training, but training reduces CLABSIs. Name this as a study assumption, not a flaw.</div>
+            </div>
+          </li>
+          <li class="pitfall-item">
+            <div>
+              <div class="pitfall-problem">CLABSI rates have been declining nationally</div>
+              <div class="pitfall-fix"><strong>Fix:</strong> Use the most current NHSN data. Acknowledge declining baseline rates in limitations. The model still holds — even at 50% of current rates, ROI remains >100:1.</div>
+            </div>
+          </li>
+          <li class="pitfall-item">
+            <div>
+              <div class="pitfall-problem">Reviewers label the model "speculative"</div>
+              <div class="pitfall-fix"><strong>Fix:</strong> Cite CHEERS 2022 compliance in Methods. Frame as "decision-analytic model" — a standard, peer-reviewed methodology. Reference prior published CLABSI economic models as precedent.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARGET JOURNALS -->
+  <div class="section-head" style="margin-top:32px;"><h2>Target Journals</h2><div class="section-line"></div></div>
+  <div class="journal-grid">
+    <div class="journal-card">
+      <div class="journal-name">Infection Control & Hospital Epidemiology <span class="if-badge">IF 4.0</span></div>
+      <div class="journal-meta">Primary target. Premier CLABSI journal. Publishes modeling studies. Patient safety framing is exactly aligned with editorial mission.</div>
+    </div>
+    <div class="journal-card">
+      <div class="journal-name">Critical Care Medicine <span class="if-badge">IF 7.7</span></div>
+      <div class="journal-meta">High impact. ICU clinicians care directly about CLABSI. Accepts health economics analyses. Aspirational but realistic for this topic.</div>
+    </div>
+    <div class="journal-card">
+      <div class="journal-name">Journal of Patient Safety <span class="if-badge">IF 3.0</span></div>
+      <div class="journal-meta">Directly aligned with patient safety framing. Strong readership among hospital administrators and quality officers — the people who act on this data.</div>
+    </div>
+    <div class="journal-card">
+      <div class="journal-name">BMJ Open <span class="if-badge">IF 2.9</span></div>
+      <div class="journal-meta">Open access, transparent peer review. Explicitly accepts modeling studies and decision analyses. Good fit for CHEERS framework reporting.</div>
+    </div>
+    <div class="journal-card">
+      <div class="journal-name">AEM Education & Training <span class="if-badge">IF 2.1</span></div>
+      <div class="journal-meta">EM-specific education journal. Familiar with simulation cost literature. Strong fallback if patient safety journals decline.</div>
+    </div>
+    <div class="journal-card">
+      <div class="journal-name">Western Journal of Emergency Medicine <span class="if-badge">IF 2.0</span></div>
+      <div class="journal-meta">Published the original SonoGuar paper. Familiar context. Reliable fallback with quick turnaround.</div>
+    </div>
+  </div>
+
+  <!-- PITCH FOOTER -->
+  <div class="pitch-footer">
+    <div class="footer-claim">
+      <h3>Why This Study Changes the Conversation</h3>
+      <p>
+        C1 proved SonoGuar saves money. C2 proves it saves lives.
+        A peer-reviewed model showing that a $3 phantom — scaled nationally — could prevent over
+        1,000 CLABSIs and avert nearly 200 deaths per year reframes SonoGuar from a simulation supply
+        into a patient safety infrastructure investment. That argument reaches hospital administrators,
+        infection control committees, and GME directors — not just simulation faculty.
+        This is the paper that makes SonoGuar impossible to ignore.
+      </p>
+    </div>
+    <div class="footer-badges">
+      <div class="badge-row">
+        <div class="badge badge-red">8 Weeks<br>to Submission</div>
+        <div class="badge badge-green">$0<br>Study Cost</div>
+      </div>
+      <div class="badge-row">
+        <div class="badge badge-red">No IRB<br>Required</div>
+        <div class="badge badge-green">276:1<br>Base ROI</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-wrapper -->
+</body>
+</html>
